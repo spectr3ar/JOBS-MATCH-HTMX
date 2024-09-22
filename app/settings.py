@@ -1,23 +1,22 @@
 import os
 from pathlib import Path
-from decouple import config
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = config('DEBUG', default=True, cast=bool)
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -70,11 +69,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': config('PGDATABASE'),
-    'USER': config('PGUSER'),
-    'PASSWORD': config('PGPASSWORD'),
-    'HOST': config('PGHOST'),
-    'PORT': config('PGPORT'),
+    'NAME': os.getenv('PGDATABASE'),
+    'USER': os.getenv('PGUSER'),
+    'PASSWORD': os.getenv('PGPASSWORD'),
+    'HOST': os.getenv('PGHOST'),
+    'PORT': os.getenv('PGPORT'),
     'OPTIONS': {
       'sslmode': 'require',
     },
